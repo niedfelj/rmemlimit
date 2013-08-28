@@ -1,7 +1,7 @@
 class Rmemlimit
 
   class << self
-    attr_accessor :gc_mb, :kill_mb, :sleep_time
+    attr_accessor :gc_mb, :kill_mb, :sleep_time, :signal
 
     def gcthread
       if !@gcthread || !@gcthread.alive?
@@ -11,7 +11,7 @@ class Rmemlimit
               mb = rss_mb
               if kill_mb && mb > kill_mb
                 STDERR.puts "#{self}: Exceeded kill memory limit (#{mb} > #{kill_mb} MB)"
-                Process.kill(9, $$)
+                Process.kill(signal, $$)
               elsif gc_mb && mb > gc_mb
                 run_gc
               end
@@ -44,6 +44,7 @@ class Rmemlimit
 
     def setup
       self.sleep_time ||= 1
+      self.signal ||= 9
       self.gc_mb = ENV['RUBY_GC_MB'].to_i if ENV['RUBY_GC_MB']
       if ENV['RUBY_KILL_MB']
         self.kill_mb = ENV['RUBY_KILL_MB'].to_i
