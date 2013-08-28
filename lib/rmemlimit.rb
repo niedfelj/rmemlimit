@@ -1,4 +1,4 @@
-class Rmemlimit
+module Rmemlimit
 
   class << self
     attr_accessor :gc_mb, :kill_mb, :sleep_time, :signal

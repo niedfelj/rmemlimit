@@ -1,1 +1,3 @@
-Rmemlimit::VERSION='0.0.1'
+module Rmemlimit
+	VERSION='0.0.1'
+end
