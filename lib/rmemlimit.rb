@@ -10,7 +10,7 @@ module Rmemlimit
             loop do
               mb = rss_mb
               if kill_mb && mb > kill_mb
-                STDERR.puts "#{self}: Exceeded kill memory limit (#{mb} > #{kill_mb} MB)"
+                STDOUT.puts "#{self}: Exceeded kill memory limit (#{mb} > #{kill_mb} MB)"
                 Process.kill(signal, $$)
               elsif gc_mb && mb > gc_mb
                 run_gc
